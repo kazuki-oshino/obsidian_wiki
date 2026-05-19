@@ -12,7 +12,7 @@
 
 期待される動き:
 
-- `CLAUDE.md`、`wiki/index.md`、`wiki/llm-knowledge-base-workflow.md` を読む
+- `CLAUDE.md`、`wiki/index.md`、`wiki/concepts/llm-knowledge-base-workflow.md` を読む
 - 質問に短く答える
 - 既存ノートにすでに同種の整理があり、新しい durable artifact は不要だと判断する
 - ユーザーが wiki 更新を明示していなくても、言い換えだけなら更新しない
@@ -29,7 +29,7 @@
 期待される動き:
 
 - 関連する既存ノートを読み、どこへ追記するのが自然かを判断する
-- 新規ノートを作らず、`wiki/llm-knowledge-base-workflow.md` のような既存 `concept` へ追記する
+- 新規ノートを作らず、`wiki/concepts/llm-knowledge-base-workflow.md` のような既存 `concept` へ追記する
 - `updated` を更新する
 - 新しい入口が不要なら `wiki/index.md` は更新しない
 

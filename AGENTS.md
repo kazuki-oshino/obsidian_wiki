@@ -14,7 +14,7 @@
 ## ディレクトリの責務
 
 - `raw/`: 一次ソースの取り込み先。Web Clipper、論文、記事、スレッド、メモなどを置く。
-- `wiki/`: Claude が生成・更新する知識ノート本体。要約、概念整理、比較、全体像の整理をここに蓄積する。
+- `wiki/`: Claude が生成・更新する知識ノート本体。`index.md` を入口にし、要約、概念整理、比較、全体像の整理を type 別サブディレクトリに蓄積する。
 - `attachments/`: 画像や添付ファイルの共通置き場。
 - `.claude/`, `.agents/`: Agent 向けの project instructions。schema の一部として、skill や将来の command / rule を置く。
 
@@ -37,6 +37,11 @@
 ## `wiki/` の作成ルール
 
 - `wiki/` のファイル名は短い kebab-case の slug にする。
+- `wiki/index.md` 以外のノートは type ごとのサブディレクトリに置く。
+  - `source-summary`: `wiki/source-summaries/<slug>.md`
+  - `concept`: `wiki/concepts/<slug>.md`
+  - `comparison`: `wiki/comparisons/<slug>.md`
+  - `overview`: `wiki/overviews/<slug>.md`
 - 各ノートは Obsidian の wikilink を前提に相互リンクする。
 - 各ノートの frontmatter には、少なくとも以下を入れる。
   - `title`
@@ -45,7 +50,7 @@
   - `created`
   - `updated`
   - `tags`
-- `sources` には、根拠となる `raw/` ノート、または query 還元で直接参照した既存 `wiki/` ノートを Obsidian の wikilink で列挙する。
+- `sources` には、根拠となる `raw/` ノート、または query 還元で直接参照した既存 `wiki/` ノートを Obsidian の wikilink で列挙する。フォルダをまたぐ wiki ノートを `sources` に入れる場合は、`[[wiki/source-summaries/...]]` や `[[wiki/concepts/...]]` のように現在の保存先を明示する。
 - `type` は `source-summary` または `concept` を主軸とし、必要なときだけ `overview` と `comparison` を使う。
 - `overview` は、特定テーマの concept や source-summary が増え、横断的な入口ページがあった方が探索しやすいときに作る。
 - `comparison` は、ユーザーが比較を明示的に求めたとき、または複数ソースに対立点や比較軸があり、後から参照する価値が高いときに作る。
@@ -62,7 +67,7 @@
 ## 特殊ファイル
 
 - `wiki/index.md` は内容中心の目次であり、wiki 全体の入口として扱う。
-- Claude は ingest 時と大きな構造変更時に `wiki/index.md` を更新し、各ページの短い説明と分類を保つ。
+- Claude は ingest 時と大きな構造変更時に `wiki/index.md` を更新し、各ページの短い説明と分類を保つ。`index.md` 自体は `overview` 型だが、wiki 全体の入口なので `wiki/overviews/` へ移動しない。
 - `wiki/log.md` は将来、ノート数や運用イベントが増えたら導入を検討する。現時点では必須にしない。
 
 ## `attachments/` の扱い
@@ -109,5 +114,5 @@
 
 - 定型ワークフローが固まったら `.claude/commands/` に slash command を追加する。
 - ルールが長くなったら `.claude/rules/` に分割する。
-- `wiki/` が大きくなってから `sources/` や `concepts/` などのサブフォルダを検討する。
+- `wiki/` は `source-summaries/`, `concepts/`, `comparisons/`, `overviews/` に分けて運用する。新しい type を増やす必要が出たときだけ追加サブフォルダを検討する。
 - ローカル検索 CLI や MCP は、`index.md` だけでは探索しづらくなってから追加を検討する。

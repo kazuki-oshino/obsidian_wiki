@@ -26,7 +26,7 @@ description: Synthesize existing `wiki/` notes into durable updates for this pro
 
 1. `CLAUDE.md`
 2. `wiki/index.md`
-3. 関連しそうな既存 `wiki/*.md`
+3. 関連しそうな既存 `wiki/**/*.md`
 4. 必要なら、それらの `sources` から辿れる `raw/*.md`
 
 `CLAUDE.md` の規約が最優先です。特に次を守ります。
@@ -53,6 +53,16 @@ description: Synthesize existing `wiki/` notes into durable updates for this pro
 5. ユーザーには、回答本体と wiki への反映内容を分けて伝える
 
 実際の編集が回答前後どちらになる場合でも、判断の順序は常に `回答を作る -> 還元価値を判断する -> 必要時のみ更新する` とします。
+
+## 保存先
+
+`wiki/index.md` だけは root に残します。Query 還元で新規ノートを作る場合は `type` ごとに保存します。
+
+- `concept`: `wiki/concepts/<slug>.md`
+- `comparison`: `wiki/comparisons/<slug>.md`
+- `overview`: `wiki/overviews/<slug>.md`
+
+`source-summary` は Query 還元の主軸にしません。`raw/*.md` からの 1:1 要約が必要なら `raw-to-wiki` を使い、`wiki/source-summaries/` に作ります。
 
 ## 還元判断
 
@@ -101,7 +111,7 @@ description: Synthesize existing `wiki/` notes into durable updates for this pro
 
 - `source-summary` は Query 還元の主軸にしない
 - 新規ノートや大きな追記を行うときは `sources`, `updated`, `tags` を整える
-- `sources` には、今回の根拠として直接参照した既存 `wiki/` ノートを入れる
+- `sources` には、今回の根拠として直接参照した既存 `wiki/` ノートを、`[[wiki/concepts/...]]` や `[[wiki/source-summaries/...]]` のように現在の保存先で入れる
 - 必要に応じて、その場で確認した `raw/` ノートも `sources` に含めてよい
 - どのノートを読んで整理したかが後から辿れる状態を保つ
 
